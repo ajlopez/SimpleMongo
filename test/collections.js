@@ -50,3 +50,15 @@ assert.ok(Array.isArray(people));
 assert.equal(people.length, 2);
 assert.equal(people[0]._id, adam._id);
 assert.equal(people[0].name, "Adam");
+
+// change retrieved document and retrieve it again
+
+adam = people[0];
+adam.name = "New Adam";
+
+var people = collection.find();
+assert.ok(people);
+assert.ok(Array.isArray(people));
+assert.equal(people.length, 2);
+assert.equal(people[0]._id, adam._id);
+assert.equal(people[0].name, "Adam");
