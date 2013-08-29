@@ -30,6 +30,44 @@ exports['find two documents'] = function (test) {
     test.equal(people[1].name, eve.name);
 }
 
+exports['find two documents with empty query'] = function (test) {
+    var collection = collections.createCollection('people');
+    var adam = { name: 'Adam', age: 800 };
+    collection.insert(adam);
+    var eve = { name: 'Eve', age: 700 };
+    collection.insert(eve);
+    
+    var people = collection.find({ });
+    test.ok(people);
+    test.ok(Array.isArray(people));
+    test.equal(people.length, 2);
+    test.equal(people[0]._id, adam._id);
+    test.equal(people[0].name, adam.name);
+    test.equal(people[0].age, adam.age);
+    test.equal(people[1]._id, eve._id);
+    test.equal(people[1].name, eve.name);
+    test.equal(people[1].age, eve.age);
+}
+
+exports['find two documents with projection'] = function (test) {
+    var collection = collections.createCollection('people');
+    var adam = { name: 'Adam', age: 800 };
+    collection.insert(adam);
+    var eve = { name: 'Eve', age: 700 };
+    collection.insert(eve);
+    
+    var people = collection.find({ }, { name: true });
+    test.ok(people);
+    test.ok(Array.isArray(people));
+    test.equal(people.length, 2);
+    test.equal(people[0]._id, adam._id);
+    test.equal(people[0].name, adam.name);
+    test.ok(people[0].age === undefined);
+    test.equal(people[1]._id, eve._id);
+    test.equal(people[1].name, eve.name);
+    test.ok(people[1].age === undefined);
+}
+
 exports['change original document and find it'] = function (test) {
     var collection = collections.createCollection('people');
     var adam = { name: 'Adam' };
