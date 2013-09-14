@@ -4,7 +4,7 @@ var collections = require('../lib/collections');
 exports['creates collection'] = function (test) {
     var collection = collections.createCollection('people');
     test.ok(collection);
-    test.equal(collection.name, 'people');
+    test.equal(collection.name(), 'people');
 }
 
 exports['insert data'] = function (test) {
